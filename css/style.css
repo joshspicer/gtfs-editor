@@ -672,6 +672,34 @@ body {
     z-index: 899;
 }
 
+/* === Floating Action Buttons === */
+#map-fabs {
+    position: fixed;
+    bottom: 24px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 800;
+}
+.fab {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: var(--color-calipers);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.3);
+    transition: background .15s, transform .1s;
+}
+.fab:hover { background: var(--color-calipers-hover); }
+.fab:active { transform: scale(0.92); }
+.fab.active { background: var(--color-primary); box-shadow: 0 0 0 3px rgba(59,130,246,.4); }
+
 /* === Responsive: short/full button labels === */
 .btn-label-short { display: none; }
 .btn-label-full { display: inline; }
@@ -711,6 +739,23 @@ body {
         transform: none;
         font-size: 12px;
     }
+
+    /* Smaller popups on mobile */
+    .leaflet-popup-content-wrapper { font-size: 12px; }
+    .leaflet-popup-content { margin: 10px 12px; min-width: 160px !important; }
+    .stop-popup .popup-row, .route-popup .popup-row { margin-bottom: 4px; }
+    .stop-popup input, .route-popup input { padding: 3px 5px; font-size: 12px; }
+    .popup-actions { margin-top: 4px; }
+    .popup-actions .action-btn { padding: 3px 8px; font-size: 11px; }
+
+    /* Smaller dialogs on mobile */
+    .dialog { padding: 16px; border-radius: 10px; max-width: 320px; }
+    .dialog h3 { font-size: 14px; margin-bottom: 6px; }
+    .dialog-body { font-size: 12px; margin-bottom: 10px; }
+    .dialog-tip { font-size: 11px; padding: 8px 10px; margin-top: 10px; }
+    .dialog-field input { padding: 6px 8px; font-size: 13px; }
+    .dialog-btn { padding: 6px 14px; font-size: 12px; }
+    .dialog-actions { margin-top: 12px; }
 }
 
 /* === Small phones (< 480px) === */

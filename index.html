@@ -101,6 +101,16 @@
     <!-- Map -->
     <div id="map"></div>
 
+    <!-- Floating action buttons (visible when panel is collapsed) -->
+    <div id="map-fabs">
+        <button id="fab-add-stop" class="fab" title="Add stops">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </button>
+        <button id="fab-add-route" class="fab" title="Add route">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </button>
+    </div>
+
     <!-- Hidden file input for import -->
     <input type="file" id="import-file" accept=".zip" style="display:none" />
 

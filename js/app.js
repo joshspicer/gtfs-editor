@@ -34,6 +34,7 @@ function setMode(mode) {
 
     // Update UI state
     document.getElementById('btn-add-stop').classList.toggle('active', mode === MODES.ADD_STOP);
+    document.getElementById('fab-add-stop')?.classList.toggle('active', mode === MODES.ADD_STOP);
 
     // Update cursor
     setCursorCrosshair(mode === MODES.ADD_STOP);
@@ -199,6 +200,26 @@ document.addEventListener('DOMContentLoaded', () => {
     backdrop.addEventListener('click', () => {
         panel.classList.add('collapsed');
         backdrop.classList.add('hidden');
+    });
+
+    // === Floating action buttons (mirror panel + buttons) ===
+    document.getElementById('fab-add-stop').addEventListener('click', () => {
+        if (currentMode === MODES.ADD_STOP) {
+            setMode(MODES.NAVIGATE);
+        } else {
+            selectRoute(null);
+            setMode(MODES.ADD_STOP);
+        }
+    });
+    document.getElementById('fab-add-route').addEventListener('click', async () => {
+        const result = await showForm('New Route', '', [
+            { label: 'Short Name', key: 'shortName', placeholder: 'e.g. A30, Coast Rd', required: true },
+            { label: 'Long Name (optional)', key: 'longName', placeholder: 'e.g. Coastal Cafe Route' },
+        ]);
+        if (!result || !result.shortName?.trim()) return;
+        const route = createRoute(result.shortName.trim(), (result.longName || '').trim());
+        selectRoute(route.id);
+        scheduleSave();
     });
 
     // === Search ===
