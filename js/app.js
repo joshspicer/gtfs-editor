@@ -180,10 +180,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === Panel toggle ===
     const panel = document.getElementById('panel');
+    const backdrop = document.getElementById('panel-backdrop');
+    const isMobile = () => window.innerWidth <= 768;
+
+    function togglePanel() {
+        const opening = panel.classList.toggle('collapsed');
+        // Show/hide backdrop on mobile
+        if (isMobile()) {
+            backdrop.classList.toggle('hidden', opening);
+        }
+    }
+
     // Auto-collapse panel on mobile
-    if (window.innerWidth <= 768) panel.classList.add('collapsed');
-    document.getElementById('panel-toggle').addEventListener('click', () => {
-        panel.classList.toggle('collapsed');
+    if (isMobile()) panel.classList.add('collapsed');
+
+    document.getElementById('panel-toggle').addEventListener('click', togglePanel);
+    document.getElementById('btn-menu').addEventListener('click', togglePanel);
+    backdrop.addEventListener('click', () => {
+        panel.classList.add('collapsed');
+        backdrop.classList.add('hidden');
     });
 
     // === Search ===
