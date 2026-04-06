@@ -647,3 +647,53 @@ body {
     font-weight: 500;
 }
 .panel-footer a:hover { text-decoration: underline; }
+
+/* === Responsive: short/full button labels === */
+.btn-label-short { display: none; }
+.btn-label-full { display: inline; }
+
+/* === Mobile (< 768px) === */
+@media (max-width: 768px) {
+    :root {
+        --panel-width: 260px;
+        --toolbar-height: 44px;
+    }
+
+    /* Toolbar: compact */
+    #toolbar { padding: 0 6px; }
+    .toolbar-group { gap: 4px; }
+    .brand-name { font-size: 13px; }
+    .brand-sub { display: none; }
+    .toolbar-divider { display: none; }
+    .action-btn { padding: 5px 8px; font-size: 12px; }
+    .btn-label-full { display: none; }
+    .btn-label-short { display: inline; }
+    .btn-desktop-only { display: none; }
+
+    /* Panel: overlay on top of map instead of pushing it */
+    #panel {
+        width: 280px;
+        box-shadow: 2px 0 12px rgba(0,0,0,.25);
+    }
+    #panel.collapsed { transform: translateX(-280px); }
+    #map { left: 0 !important; }
+
+    /* Assign status bar */
+    #assign-status {
+        bottom: 12px;
+        left: 8px;
+        right: 8px;
+        transform: none;
+        font-size: 12px;
+    }
+}
+
+/* === Small phones (< 480px) === */
+@media (max-width: 480px) {
+    :root { --toolbar-height: 40px; }
+    .brand-icon { width: 18px; height: 18px; }
+    .brand-name { font-size: 12px; }
+    .action-btn { padding: 4px 6px; font-size: 11px; }
+    #panel { width: 240px; }
+    #panel.collapsed { transform: translateX(-240px); }
+}

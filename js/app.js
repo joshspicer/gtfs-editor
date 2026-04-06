@@ -179,8 +179,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // === Panel toggle ===
+    const panel = document.getElementById('panel');
+    // Auto-collapse panel on mobile
+    if (window.innerWidth <= 768) panel.classList.add('collapsed');
     document.getElementById('panel-toggle').addEventListener('click', () => {
-        document.getElementById('panel').classList.toggle('collapsed');
+        panel.classList.toggle('collapsed');
     });
 
     // === Search ===
