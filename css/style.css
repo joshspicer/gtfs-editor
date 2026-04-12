@@ -663,6 +663,22 @@ body {
 .panel-footer-actions .action-btn:hover { background: var(--color-bg-hover); }
 .panel-footer-actions .action-btn.danger { color: var(--color-danger); }
 
+.gtfs-sources {
+    margin-top: 10px;
+    font-size: 11px;
+    color: var(--color-text-muted);
+}
+.gtfs-sources summary {
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--color-text);
+}
+.gtfs-sources ul {
+    margin: 6px 0 0;
+    padding-left: 18px;
+    line-height: 1.7;
+}
+
 /* Hamburger & backdrop */
 .btn-mobile-only { display: none; }
 #panel-backdrop {
