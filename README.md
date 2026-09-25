@@ -8,10 +8,12 @@ Add stops, draw routes, and export a valid GTFS ZIP for use in [MapCalipers](htt
 
 1. Click the map to add stops
 2. Use the route tool to draw routes between waypoints
-3. Export as a GTFS ZIP — import directly into MapCalipers via the share sheet or file picker (or host [on your own MapCalipers server](https://joshspicer.com/mapcalipers#self-hosting)).
+3. (Optional) Define a custom **Game Border** (polygon) to set the playable area
+4. Export as a GTFS ZIP — import directly into MapCalipers via the share sheet or file picker (or host [on your own MapCalipers server](https://joshspicer.com/mapcalipers#self-hosting)).
 
 All data remains client-side in your browser.  
 
 ## Notes
 
-Not affiliated with Nebula or Jet Lag: The Game.
+- **Game Border (`mapcalipers_game_region.txt`)**: This is a non-standard GTFS extension file custom to MapCalipers (supported in v1.10+). Standard GTFS consumers and transit tools will simply ignore this file.
+- Not affiliated with Nebula or Jet Lag: The Game.
