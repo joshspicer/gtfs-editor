@@ -7,6 +7,7 @@
 
 import { setStops } from './stops.js';
 import { setRoutes, refreshAllPolylines } from './routes.js';
+import { setBorderPoints, clearBorder } from './border.js';
 import { getMap } from './map.js';
 import { showAlert } from './dialog.js';
 
@@ -25,9 +26,10 @@ export async function importGTFS(file) {
     const routesCsv = await readZipFile(zip, 'routes.txt');
     const tripsCsv = await readZipFile(zip, 'trips.txt');
     const shapesCsv = await readZipFile(zip, 'shapes.txt');
+    const borderCsv = await readZipFile(zip, 'mapcalipers_game_region.txt') || await readZipFile(zip, 'game_region.txt');
 
-    if (!stopsCsv && !routesCsv) {
-        await showAlert('Invalid GTFS', 'This zip doesn\'t contain stops.txt or routes.txt — not a valid GTFS feed.');
+    if (!stopsCsv && !routesCsv && !borderCsv) {
+        await showAlert('Invalid GTFS', 'This zip doesn\'t contain stops.txt, routes.txt, or game border — not a valid GTFS feed.');
         return;
     }
 
@@ -110,14 +112,39 @@ export async function importGTFS(file) {
         }
     }
 
-    // Apply to editor — stops first, then routes (routes need stops to build polylines)
+    // Parse game border
+    const borderPoints = [];
+    if (borderCsv) {
+        const borderRows = parseCsv(borderCsv);
+        for (const row of borderRows) {
+            const latStr = row['point_lat'] || row['lat'] || row['stop_lat'] || row['latitude'];
+            const lonStr = row['point_lon'] || row['lon'] || row['lng'] || row['stop_lon'] || row['longitude'];
+            const seqStr = row['point_sequence'] || row['sequence'] || row['seq'];
+            const lat = parseFloat(latStr);
+            const lng = parseFloat(lonStr);
+            const seq = seqStr !== undefined && seqStr !== '' ? parseInt(seqStr) : borderPoints.length + 1;
+            if (!isNaN(lat) && !isNaN(lng)) {
+                borderPoints.push({ lat, lng, seq: isNaN(seq) ? borderPoints.length + 1 : seq });
+            }
+        }
+        borderPoints.sort((a, b) => a.seq - b.seq);
+    }
+
+    // Apply to editor — stops first, then routes, then game border
     setStops(stops);
     setRoutes(routes);
     refreshAllPolylines();
 
-    // Fit map to all imported data
+    if (borderPoints.length >= 3) {
+        setBorderPoints(borderPoints.map(p => ({ lat: p.lat, lng: p.lng })));
+    } else {
+        clearBorder();
+    }
+
+    // Fit map to all imported data (stops and border)
     const bounds = L.latLngBounds([]);
     for (const s of stops) bounds.extend([s.lat, s.lng]);
+    for (const b of borderPoints) bounds.extend([b.lat, b.lng]);
     if (bounds.isValid()) {
         getMap().fitBounds(bounds, { padding: [40, 40] });
     }

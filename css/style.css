@@ -285,8 +285,8 @@ body {
     flex-shrink: 0;
 }
 
-/* === Assign Status Bar === */
-#assign-status {
+/* === Assign Status Bar & Border Status Bar === */
+#assign-status, #border-status {
     position: fixed;
     bottom: 20px;
     left: 50%;
@@ -302,12 +302,52 @@ body {
     align-items: center;
     gap: 10px;
 }
-#assign-status .action-btn {
+#assign-status .action-btn, #border-status .action-btn {
     color: var(--color-text);
     border-color: var(--color-border);
     background: var(--color-bg);
 }
-#assign-status .action-btn:hover { background: var(--color-bg-hover); }
+#assign-status .action-btn:hover, #border-status .action-btn:hover { background: var(--color-bg-hover); }
+#border-status .action-btn.calipers-btn {
+    background: var(--color-calipers);
+    color: #fff;
+    border-color: var(--color-calipers);
+}
+#border-status .action-btn.calipers-btn:hover { background: var(--color-calipers-hover); }
+
+/* Vertex markers for border drawing */
+.border-vertex-icon {
+    background: transparent;
+    border: none;
+}
+.vertex-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #6366f1;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ffffff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.15s ease;
+}
+.vertex-dot:hover {
+    transform: scale(1.15);
+}
+.vertex-dot.vertex-first {
+    background: #10b981;
+    border-color: #ffffff;
+    cursor: pointer;
+}
+.border-popup {
+    min-width: 140px;
+}
 
 /* === Map === */
 #map {
@@ -747,8 +787,8 @@ body {
     #panel.collapsed { transform: translateX(-280px); }
     #map { left: 0 !important; }
 
-    /* Assign status bar */
-    #assign-status {
+    /* Assign status bar & Border status bar */
+    #assign-status, #border-status {
         bottom: 12px;
         left: 8px;
         right: 8px;

@@ -78,6 +78,16 @@
             <p class="panel-hint" id="route-hint">Press <strong>+</strong> to create a route, then click stops to assign them.</p>
         </div>
 
+        <!-- Game Border section -->
+        <div class="panel-section" id="border-section">
+            <h3>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 22 22 7 12 2"/></svg>
+                Game Border <span id="border-badge" class="badge">None</span>
+                <button id="btn-draw-border" class="section-add-btn" title="Create or edit game border">+</button>
+            </h3>
+            <div id="border-panel-content"></div>
+        </div>
+
         <!-- Footer -->
         <div class="panel-footer">
             <div class="panel-footer-actions">
@@ -107,6 +117,14 @@
         <button id="btn-done-assign" class="action-btn small">Done</button>
     </div>
 
+    <!-- Game border status bar (shown when drawing border) -->
+    <div id="border-status" class="hidden">
+        <span id="border-status-text">Click map to add border points.</span>
+        <button id="btn-border-undo" class="action-btn small">Undo</button>
+        <button id="btn-border-done" class="action-btn calipers-btn small">Done</button>
+        <button id="btn-border-cancel" class="action-btn small">Cancel</button>
+    </div>
+
     <!-- Map -->
     <div id="map"></div>
 
@@ -117,6 +135,9 @@
         </button>
         <button id="fab-add-route" class="fab" title="Add route">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </button>
+        <button id="fab-draw-border" class="fab" title="Game border">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 22 22 7 12 2"/></svg>
         </button>
     </div>
 
