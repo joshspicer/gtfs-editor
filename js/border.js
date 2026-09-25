@@ -169,6 +169,7 @@ function updateDrawingVisuals() {
             color: '#6366f1',
             weight: 3,
             opacity: 0.9,
+            interactive: false,
         }).addTo(map);
     }
 
@@ -179,6 +180,7 @@ function updateDrawingVisuals() {
             weight: 2,
             dashArray: '5, 5',
             opacity: 0.6,
+            interactive: false,
         }).addTo(map);
     }
 
@@ -249,32 +251,8 @@ function renderSavedPolygon() {
         dashArray: '6, 6',
         fillColor: '#6366f1',
         fillOpacity: 0.1,
+        interactive: false,
     }).addTo(map);
-
-    polygonLayer.bindPopup(() => {
-        const div = document.createElement('div');
-        div.className = 'border-popup';
-        div.innerHTML = `
-            <div style="font-weight:600; margin-bottom:4px;">Game Border</div>
-            <div style="font-size:12px; color:#6b7280; margin-bottom:8px;">${borderPoints.length} vertices</div>
-            <div style="display:flex; gap:6px;">
-                <button class="action-btn small calipers-btn" id="btn-popup-edit-border">Edit</button>
-                <button class="action-btn small danger" id="btn-popup-clear-border">Clear</button>
-            </div>
-        `;
-        setTimeout(() => {
-            div.querySelector('#btn-popup-edit-border')?.addEventListener('click', () => {
-                map.closePopup();
-                startDrawingBorder(true);
-            });
-            div.querySelector('#btn-popup-clear-border')?.addEventListener('click', async () => {
-                map.closePopup();
-                const ok = await showConfirm('Clear Game Border', 'Remove the game border from this project?', { okLabel: 'Clear', danger: true });
-                if (ok) clearBorder();
-            });
-        }, 50);
-        return div;
-    });
 }
 
 // === UI Update ===
