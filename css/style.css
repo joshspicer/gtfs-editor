@@ -345,9 +345,6 @@ body {
     border-color: #ffffff;
     cursor: pointer;
 }
-.border-popup {
-    min-width: 140px;
-}
 
 /* === Map === */
 #map {
