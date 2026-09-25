@@ -367,7 +367,7 @@ function updateUI() {
                             : `⚠ ${coverage.outside} of ${coverage.total} stops outside boundary`}
                     </p>` : ''}
                     <p class="panel-hint" style="margin-bottom:10px;">
-                        This boundary will be exported as <code>mapcalipers_game_region.txt</code>.
+                        This boundary will be exported as <code>mapcalipers_game_region.txt</code> (non-standard GTFS extension, supported in MapCalipers v1.10+).
                     </p>
                     <div style="display:flex; gap:6px;">
                         <button id="btn-panel-border-edit" class="action-btn small calipers-btn" style="flex:1">Edit</button>
@@ -391,7 +391,7 @@ function updateUI() {
         } else {
             content.innerHTML = `
                 <p class="panel-hint" style="margin-bottom:8px;">
-                    Define the playable game area for MapCalipers games by drawing a polygon.
+                    Define the playable game area for MapCalipers games by drawing a polygon (non-standard GTFS extension, supported in MapCalipers v1.10+).
                 </p>
                 <div style="display:flex; flex-direction:column; gap:6px;">
                     <button id="btn-panel-border-start" class="action-btn small calipers-btn" style="width:100%;">

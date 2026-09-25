@@ -67,6 +67,7 @@ export async function exportGTFS() {
         + `1. Open the ZIP file on your iPhone/iPad<br>`
         + `2. Tap the <strong>Share</strong> button, then choose <strong>MapCalipers</strong><br>`
         + `3. The feed will appear in your city selection automatically<br><br>`
+        + (hasBorder() ? `<em>Note: The game border (<code>mapcalipers_game_region.txt</code>) is a non-standard GTFS extension supported in MapCalipers v1.10+.</em><br><br>` : '')
         + `Don't have the app? <a href="https://apps.apple.com/us/app/map-calipers/id6746725018" target="_blank">Download MapCalipers</a>`
         + `</div>`,
         'Done'
