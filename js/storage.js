@@ -7,6 +7,7 @@
 
 import { getStops, setStops } from './stops.js';
 import { getRoutes, setRoutes, refreshAllPolylines } from './routes.js';
+import { getBorderPoints, setBorderPoints, clearBorder } from './border.js';
 
 const STORAGE_KEY = 'gtfs-editor-project-v2';
 let saveTimeout = null;
@@ -29,6 +30,7 @@ export function save() {
             color: r.color,
             stopIds: r.stopIds,
         })),
+        border: getBorderPoints().map(p => ({ lat: p.lat, lng: p.lng })),
     };
     try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
@@ -52,7 +54,10 @@ export function restore() {
             setRoutes(data.routes);
             refreshAllPolylines();
         }
-        return (data.stops?.length > 0 || data.routes?.length > 0);
+        if (Array.isArray(data.border) && data.border.length >= 3) {
+            setBorderPoints(data.border);
+        }
+        return (data.stops?.length > 0 || data.routes?.length > 0 || (Array.isArray(data.border) && data.border.length >= 3));
     } catch {
         return false;
     }
@@ -60,5 +65,6 @@ export function restore() {
 
 /** Clear saved state */
 export function clearSaved() {
+    clearBorder();
     localStorage.removeItem(STORAGE_KEY);
 }

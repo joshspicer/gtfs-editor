@@ -15,14 +15,16 @@
 
 import { getStops } from './stops.js';
 import { getRoutes } from './routes.js';
+import { hasBorder, getBorderPoints } from './border.js';
 import { showAlert, showPrompt } from './dialog.js';
 
 export async function exportGTFS() {
     const stops = getStops();
     const routes = getRoutes();
+    const border = getBorderPoints();
 
-    if (stops.length === 0 && routes.length === 0) {
-        await showAlert('Nothing to Export', 'Add some stops or routes first before exporting.');
+    if (stops.length === 0 && routes.length === 0 && !hasBorder()) {
+        await showAlert('Nothing to Export', 'Add some stops, routes, or a game border first before exporting.');
         return;
     }
 
@@ -45,13 +47,21 @@ export async function exportGTFS() {
     zip.file('trips.txt', generateTripsTxt(routes));
     zip.file('shapes.txt', generateShapesTxt(routes, stops));
 
+    if (hasBorder()) {
+        zip.file('mapcalipers_game_region.txt', generateGameRegionTxt(border));
+    }
+
     const blob = await zip.generateAsync({ type: 'blob' });
     downloadBlob(blob, `${filename}.zip`);
+
+    const borderNotice = hasBorder()
+        ? `, and a game border (${border.length} vertices)`
+        : '';
 
     // Show tip about importing into MapCalipers
     await showAlert(
         'Export Complete!',
-        `<strong>${filename}.zip</strong> has been downloaded with ${stops.length} stop${stops.length !== 1 ? 's' : ''} and ${routes.length} route${routes.length !== 1 ? 's' : ''}.`
+        `<strong>${filename}.zip</strong> has been downloaded with ${stops.length} stop${stops.length !== 1 ? 's' : ''}, ${routes.length} route${routes.length !== 1 ? 's' : ''}${borderNotice}.`
         + `<div class="dialog-tip">`
         + `<strong>To import into MapCalipers:</strong><br>`
         + `1. Open the ZIP file on your iPhone/iPad<br>`
@@ -61,6 +71,15 @@ export async function exportGTFS() {
         + `</div>`,
         'Done'
     );
+}
+
+function generateGameRegionTxt(points) {
+    const lines = ['point_sequence,point_lat,point_lon'];
+    let seq = 1;
+    for (const p of points) {
+        lines.push(`${seq++},${Number(p.lat).toFixed(6)},${Number(p.lng).toFixed(6)}`);
+    }
+    return lines.join('\n') + '\n';
 }
 
 function generateStopsTxt(stops) {
